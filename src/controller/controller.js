@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
@@ -9,11 +9,11 @@ export const listeController = {
       console.log("req.body", req.body);
       const liste = await prisma.liste.create({
         data: {
-          "date_dujour": req.body.date_du_jour,
-          "formateur": req.body.formateur,
-          "nom_prenom": req.body.nom_prenom,
-          "heure_arriveer": req.body.heure_arriveer,
-          "signature": req.body.signature,
+          date_du_jour: req.body.date_du_jour, // Correction de la clé
+          formateur: req.body.formateur,
+          nom_prenom: req.body.nom_prenom,
+          heure_arriveer: req.body.heure_arriveer, // Correction de la clé
+          signature: req.body.signature,
         },
       });
       res.status(201).json(liste);
@@ -57,17 +57,16 @@ export const listeController = {
   updateListeById: async (req, res) => {
     try {
       const { id_liste } = req.params;
-      console.log("req.body", req.body);
       const updatedListe = await prisma.liste.update({
         where: {
           id_liste: parseInt(id_liste),
         },
         data: {
-          "date_du_jour": req.body.date_du_jour || liste.date_du_jour,
-          "formateur": req.body.formateur || liste.formateur,
-          'nom_prenom': req.body.nom_prenom || liste.nom_prenom,
-          "heure_arriveer": req.body.heure_arriveer || liste.heure_arriveer,
-          "signature": req.body.signature || liste.signature
+          date_du_jour: req.body.date_du_jour || undefined,
+          formateur: req.body.formateur || undefined,
+          nom_prenom: req.body.nom_prenom || undefined,
+          heure_arriveer: req.body.heure_arriveer || undefined,
+          signature: req.body.signature || undefined
         },
       });
       res.status(200).json(updatedListe);
@@ -92,5 +91,41 @@ export const listeController = {
       res.status(500).json({ error: 'Erreur lors de la suppression de la liste' });
     }
   },
+
+  // Recherche d'une liste par nom_prenom
+  getListesByNomPrenom: async (req, res) => {
+    try {
+      const { query } = req.query;
+      const listes = await prisma.liste.findMany({
+        where: {
+          nom_prenom: {
+            contains: query,
+            mode: 'insensitive',
+          },
+        },
+      });
+      res.status(200).json(listes);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Erreur lors de la recherche des listes' });
+    }
+  },
+
+  // Trier les listes
+  getSortedListes: async (req, res) => {
+    try {
+      const { field, order } = req.query;
+      const listes = await prisma.liste.findMany({
+        orderBy: {
+          [field]: order || 'asc',
+        },
+      });
+      res.status(200).json(listes);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Erreur lors de la récupération des listes triées' });
+    }
+  }
 };
+
 export default listeController;

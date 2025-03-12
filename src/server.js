@@ -1,7 +1,6 @@
-// server.js
 import express from 'express';
 import routesListe from './routes/routesListe.js'; // Importation des routes
-import setupSwagger from './swagger.js'; // Chemin vers votre fichier swagger.js
+import setupSwagger from './swagger.js'; // Importation de la configuration Swagger
 
 const app = express();
 const port = 3000;
