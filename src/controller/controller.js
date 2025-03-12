@@ -1,19 +1,19 @@
-import {PrismaClient} from "@prisma/client";
+import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-const listeController = {
+export const listeController = {
   // Créer un nouvel enregistrement
   createListe: async (req, res) => {
     try {
-      console.log("req.body",req.body)
+      console.log("req.body", req.body);
       const liste = await prisma.liste.create({
         data: {
-          "date_dujour":req.body.date_du_jour,
-          "formateur":req.body.formateur,  
-          "nom_prenom":req.body.nom_prenom,
-          "heure_arriveer":req.body.heure_arriveer,
-          "signature":req.body.signature,
+          "date_dujour": req.body.date_du_jour,
+          "formateur": req.body.formateur,
+          "nom_prenom": req.body.nom_prenom,
+          "heure_arriveer": req.body.heure_arriveer,
+          "signature": req.body.signature,
         },
       });
       res.status(201).json(liste);
@@ -57,17 +57,17 @@ const listeController = {
   updateListeById: async (req, res) => {
     try {
       const { id_liste } = req.params;
-      console.log("req.body",req.body);
+      console.log("req.body", req.body);
       const updatedListe = await prisma.liste.update({
         where: {
           id_liste: parseInt(id_liste),
         },
         data: {
-          "date_du_jour":req.body.date_du_jour || liste.date_du_jour,
-          "formateur":req.body.formateur || liste.formateur ,
-          'nom_prenom':req.body.nom_prenom || liste.nom_prenom,
-          "heure_arriveer":req.body.heure_arriveer || liste.heure_arriveer,
-          "signature":req.body.signature || liste.signature
+          "date_du_jour": req.body.date_du_jour || liste.date_du_jour,
+          "formateur": req.body.formateur || liste.formateur,
+          'nom_prenom': req.body.nom_prenom || liste.nom_prenom,
+          "heure_arriveer": req.body.heure_arriveer || liste.heure_arriveer,
+          "signature": req.body.signature || liste.signature
         },
       });
       res.status(200).json(updatedListe);
@@ -93,5 +93,4 @@ const listeController = {
     }
   },
 };
-
-module.exports = listeController;
+export default listeController;
