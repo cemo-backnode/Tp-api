@@ -1,4 +1,6 @@
 import express from 'express';
+import { listeController } from '../controllers/controller.js'; // Importation nommée
+
 const router = express.Router();
 
 /**
@@ -48,9 +50,7 @@ const router = express.Router();
  *   }
  * }
  */
-router.get('/liste', (req, res) => {
-    // Logique pour récupérer toutes les listes avec tri et recherche
-});
+router.get('/liste', listeController.getAllListes);
 
 /**
  * @swagger
@@ -89,9 +89,7 @@ router.get('/liste', (req, res) => {
  *   }
  * }
  */
-router.post('/liste', (req, res) => {
-    // Logique pour créer une nouvelle entrée
-});
+router.post('/liste', listeController.createListe);
 
 /**
  * @swagger
@@ -122,9 +120,7 @@ router.post('/liste', (req, res) => {
  *   }
  * }
  */
-router.get('/liste/:id', (req, res) => {
-    // Logique pour récupérer une entrée par ID
-});
+router.get('/liste/:id', listeController.getListeById);
 
 /**
  * @swagger
@@ -176,9 +172,7 @@ router.get('/liste/:id', (req, res) => {
  *   }
  * }
  */
-router.put('/liste/:id', (req, res) => {
-    // Logique pour mettre à jour une entrée par ID
-});
+router.put('/liste/:id', listeController.updateListeById);
 
 /**
  * @swagger
@@ -209,9 +203,7 @@ router.put('/liste/:id', (req, res) => {
  *   }
  * }
  */
-router.delete('/liste/:id', (req, res) => {
-    // Logique pour supprimer une entrée par ID
-});
+router.delete('/liste/:id', listeController.deleteListeById);
 
 /**
  * @swagger
@@ -239,9 +231,7 @@ router.delete('/liste/:id', (req, res) => {
  *   }
  * }
  */
-router.get('/liste/search', (req, res) => {
-    // Logique pour rechercher des entrées par nom_prenom
-});
+router.get('/liste/search', listeController.getListesByNomPrenom);
 
 /**
  * @swagger
@@ -279,9 +269,6 @@ router.get('/liste/search', (req, res) => {
  *   }
  * }
  */
-router.get('/liste/sort', (req, res) => {
-    // Logique pour récupérer toutes les listes triées
-});
+router.get('/liste/sort', listeController.getSortedListes);
 
-// Exportation du routeur
 export default router;
