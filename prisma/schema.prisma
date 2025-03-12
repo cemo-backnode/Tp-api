@@ -15,7 +15,7 @@ model liste{
   date_du_jour DateTime @default(now())
   formateur String @default("coach wilfrid")
   nom_prenom String
-  heure_arrive String 
+  heure_arriveer String 
   signature String @unique
 }
 
