@@ -1,5 +1,5 @@
 import express from 'express';
-import { listeController } from '../controllers/controller.js'; // Importation nommée
+import { listeController } from '../controller/controller.js'; // Importation nommée
 
 const router = express.Router();
 
